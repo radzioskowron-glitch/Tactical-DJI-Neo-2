@@ -1,0 +1,3 @@
+<resources>
+    <bitmap id="background" filename="drawables/background.jpg" />
+</resources>
