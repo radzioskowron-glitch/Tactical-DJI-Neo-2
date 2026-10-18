@@ -6,22 +6,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/matco/connectiq-tester
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up Connect IQ SDK
+        uses: matco/setup-connectiq-sdk@v1
+        with:
+          sdk-version: latest
+
       - name: Generate developer key
         run: |
-          openssl genrsa -out developer_key 4096
-          openssl pkcs8 -topk8 -nocrypt -in developer_key -out developer_key.der
+          openssl genrsa -out developer_key.pem 4096
+          openssl pkcs8 -topk8 -nocrypt -in developer_key.pem -inform PEM -out developer_key.der -outform DER
 
       - name: Build store IQ
         run: |
           mkdir -p bin
           monkeyc -o bin/Tactical-DJI-Neo-2.iq -f monkey.jungle -y developer_key.der -e
-          ls -l bin/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
