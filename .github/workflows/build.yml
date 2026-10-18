@@ -20,7 +20,7 @@ jobs:
       - name: Build store IQ
         run: |
           mkdir -p bin
-          monkeyc -o bin/Tactical-DJI-Neo-2.iq -f monkey.jungle -y developer_key -e
+          monkeyc -o bin/Tactical-DJI-Neo-2.iq -f monkey.jungle -y developer_key.der -e
           ls -l bin/
 
       - name: Upload artifact
