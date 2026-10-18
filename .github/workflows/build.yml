@@ -9,8 +9,10 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           mkdir -p bin
-          openssl genrsa -out developer_key 4096
-          monkeyc -o bin/Tactical_DJI_Neo_2.prg -f monkey.jungle -y developer_key -d fenix7pro -w
+          openssl genrsa -out developer_key.pem 4096
+          openssl pkcs8 -topk8 -inform PEM -outform DER -in developer_key.pem -out developer_key.der -nocrypt
+          monkeyc -o bin/Tactical_DJI_Neo_2.prg -f monkey.jungle -y developer_key.der -d fenix7pro -w
+          ls -lh bin/
       - uses: actions/upload-artifact@v4
         with:
           name: zegarek-fenix7pro
