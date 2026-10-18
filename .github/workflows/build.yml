@@ -1,19 +1,32 @@
-name: Build
-on: [push]
+name: build
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/matco/connectiq-tester:latest
+    container: 
+      image: ghcr.io/matco/connectiq:latest
     steps:
-      - uses: actions/checkout@v4
-      - run: |
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate developer key
+        run: |
+          mkdir -p $HOME/.ssh
+          openssl genrsa -out $HOME/.ssh/developer_key 4096 2>/dev/null || ssh-keygen -t rsa -b 4096 -f $HOME/.ssh/developer_key -N "" -q
+          openssl pkcs8 -topk8 -inform PEM -outform DER -in $HOME/.ssh/developer_key -out $HOME/.ssh/developer_key.der -nocrypt
+
+      - name: Build fenix7
+        run: |
           mkdir -p bin
-          openssl genrsa -out developer_key.pem 4096
-          openssl pkcs8 -topk8 -inform PEM -outform DER -in developer_key.pem -out developer_key.der -nocrypt
-          monkeyc -o bin/Tactical_DJI_Neo_2.prg -f monkey.jungle -y developer_key.der -d fenix7pro -w
-          ls -lh bin/
-      - uses: actions/upload-artifact@v4
+          monkeyc -d fenix7 -f monkey.jungle -o bin/Tactical-DJI-Neo-2.prg -y $HOME/.ssh/developer_key -w
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: zegarek-fenix7pro
+          name: Tactical-DJI-Neo-2-fenix7
           path: bin/
