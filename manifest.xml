@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <iq:manifest version="3" xmlns:iq="http://www.garmin.com/xml/connectiq">
-    <iq:application entry="TacticalDJI" id="TWOJE-ID" launcherIcon="@Drawables.LauncherIcon" minApiLevel="3.2.0" name="@Strings.AppName" type="watch-face">
+    <iq:application id="b2ed48ea48d641d2b9e08ec89edbf1ec" type="watchface" name="@Strings.AppName" entry="TacticalDjiNeo2App" launcherIcon="@Drawables.LauncherIcon" minApiLevel="3.2.0">
         <iq:products>
-            <!-- zostaw swoje produkty -->
+            <!-- dodaj tu swoje zegarki, np: -->
+            <iq:product id="fenix7"/>
+            <iq:product id="epix2"/>
+            <iq:product id="forerunner955"/>
         </iq:products>
         <iq:permissions>
             <iq:uses-permission id="SensorHistory"/>
@@ -10,6 +13,8 @@
         </iq:permissions>
         <iq:languages>
             <iq:language>eng</iq:language>
+            <iq:language>pol</iq:language>
         </iq:languages>
+        <iq:barrels/>
     </iq:application>
 </iq:manifest>
