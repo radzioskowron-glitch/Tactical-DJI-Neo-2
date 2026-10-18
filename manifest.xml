@@ -3,9 +3,7 @@
     <iq:application id="b2ed48ea48d641d2b9e08ec89edbf1ec" type="watchface" name="@Strings.AppName" entry="TacticalDjiNeo2App" launcherIcon="@Drawables.LauncherIcon" minApiLevel="3.2.0">
         <iq:products>
             <iq:product id="fenix7"/>
-            <iq:product id="fenix7pro"/>
             <iq:product id="epix2"/>
-            <iq:product id="epix2pro"/>
         </iq:products>
         <iq:permissions>
             <iq:uses-permission id="SensorHistory"/>
