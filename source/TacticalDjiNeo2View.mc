@@ -1,37 +1,37 @@
-import Toybox.Graphics;
-import Toybox.Lang;
-import Toybox.System;
-import Toybox.WatchUi;
+using Toybox.Graphics as Gfx;
+using Toybox.System as Sys;
+using Toybox.Lang as Lang;
+using Toybox.WatchUi as Ui;
 
-class TacticalDjiNeo2View extends WatchUi.WatchFace {
+class TacticalDjiNeo2View extends Ui.WatchFace {
 
     function initialize() {
         WatchFace.initialize();
     }
 
-    function onLayout(dc as Dc) as Void {
-        setLayout(Rez.Layouts.WatchFace(dc));
+    function onLayout(dc) {
     }
 
-    function onShow() as Void {
-    }
-
-    function onUpdate(dc as Dc) as Void {
-        var clockTime = System.getClockTime();
+    function onUpdate(dc) {
+        dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+        dc.clear();
+        dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
+        
+        var clockTime = Sys.getClockTime();
         var timeString = Lang.format("$1$:$2$", [clockTime.hour.format("%02d"), clockTime.min.format("%02d")]);
         
-        var view = View.findDrawableById("TimeLabel") as Text;
-        view.setText(timeString);
-        
-        View.onUpdate(dc);
+        dc.drawText(dc.getWidth() / 2, dc.getHeight() / 2, Gfx.FONT_NUMBER_THAI_HOT, timeString, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
     }
 
-    function onHide() as Void {
+    function onShow() {
     }
 
-    function onExitSleep() as Void {
+    function onHide() {
     }
 
-    function onEnterSleep() as Void {
+    function onExitSleep() {
+    }
+
+    function onEnterSleep() {
     }
 }
