@@ -5,7 +5,7 @@
             <iq:product id="fenix7ProSolar"/>
         </iq:products>
         <iq:permissions>
-            <iq:permission id="SensorHistory"/>
+            <iq:uses-permission id="SensorHistory"/>
         </iq:permissions>
         <iq:languages>
             <iq:language>pol</iq:language>
