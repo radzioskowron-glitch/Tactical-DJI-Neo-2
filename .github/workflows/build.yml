@@ -3,22 +3,15 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/matco/connectiq-tester:latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Prepare folders and key
-        run: |
+      - run: |
           mkdir -p bin
           openssl genrsa -out developer_key 4096
-
-      - name: Build PRG
-        uses: floscher/connectiq-action@v1
-        with:
-          manifest-path: manifest.xml
-          developer-key-path: developer_key
-
-      - name: Upload PRG
-        uses: actions/upload-artifact@v4
+          monkeyc -o bin/Tactical_DJI_Neo_2.prg -f monkey.jungle -y developer_key -d fenix7pro -w
+      - uses: actions/upload-artifact@v4
         with:
           name: zegarek-fenix7pro
-          path: bin/*.prg
+          path: bin/
