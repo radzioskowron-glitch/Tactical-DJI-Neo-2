@@ -1,15 +1,13 @@
 name: build
-
 on:
   push:
     branches: [ "main" ]
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: 
-      image: ghcr.io/matco/connectiq-tester:latest
+    container:
+      image: ghcr.io/matco/connectiq-sdk
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -17,15 +15,17 @@ jobs:
       - name: Generate developer key
         run: |
           openssl genrsa -out developer_key 4096
-          openssl pkcs8 -topk8 -inform PEM -outform DER -in developer_key -out developer_key.der -nocrypt
+          openssl pkcs8 -topk8 -nocrypt -in developer_key -out developer_key.der
+          ls -l
 
-      - name: Build fenix7
+      - name: Build store IQ
         run: |
           mkdir -p bin
-          monkeyc -d fenix7 -f monkey.jungle -o bin/Tactical-DJI-Neo-2.prg -y developer_key.der -w
+          monkeyc -o bin/Tactical-DJI-Neo-2.iq -f monkey.jungle -y developer_key -e
+          ls -l bin/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: Tactical-DJI-Neo-2
-          path: bin/
+          path: bin/*.iq
